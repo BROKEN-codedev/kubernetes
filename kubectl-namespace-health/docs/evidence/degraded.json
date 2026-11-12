@@ -1,0 +1,65 @@
+{
+  "exit_code": 1,
+  "namespace": "demo",
+  "pods": [
+    {
+      "name": "api",
+      "namespace": "demo",
+      "phase": "Running",
+      "ready": true,
+      "restarts": 1,
+      "terminating": false,
+      "waiting_reasons": []
+    },
+    {
+      "name": "completed-job",
+      "namespace": "demo",
+      "phase": "Succeeded",
+      "ready": false,
+      "restarts": 20,
+      "terminating": false,
+      "waiting_reasons": []
+    },
+    {
+      "name": "worker",
+      "namespace": "demo",
+      "phase": "Running",
+      "ready": false,
+      "restarts": 7,
+      "terminating": false,
+      "waiting_reasons": []
+    }
+  ],
+  "reasons": [
+    "1 pod(s) not ready",
+    "worker: 7 cumulative restarts >= 5",
+    "1 recent Warning event record(s)"
+  ],
+  "recent_warning_events": [
+    {
+      "message": "Probe failed",
+      "name": "readiness-failure",
+      "reason": "Unhealthy",
+      "timestamp": "2026-11-10T11:30:00+00:00"
+    }
+  ],
+  "reference_time": "2026-11-10T12:00:00+00:00",
+  "source": "simulation",
+  "status": "DEGRADED",
+  "summary": {
+    "completed_pods": 1,
+    "evaluated_pods": 2,
+    "not_ready_pods": 1,
+    "ready_pods": 1,
+    "recent_warning_records": 1,
+    "total_pods": 3,
+    "total_restarts": 8
+  },
+  "thresholds": {
+    "recent_minutes": 60,
+    "restart_threshold": 5
+  },
+  "timestamp_diagnostics": {
+    "unusable_warning_records": []
+  }
+}

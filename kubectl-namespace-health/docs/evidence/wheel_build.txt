@@ -1,0 +1,4 @@
+$ /Users/ayaanjindal/.codex/.chatgpt-projects/g-p-6ad8acb044d4819189c30d81d1fade5f/output/ojt/kubectl-namespace-health/.venv/bin/python scripts/build_wheel.py
+/Users/ayaanjindal/.codex/.chatgpt-projects/g-p-6ad8acb044d4819189c30d81d1fade5f/output/ojt/kubectl-namespace-health/dist/kubectl_namespace_health-1.0.0-py3-none-any.whl
+
+Process exit: 0

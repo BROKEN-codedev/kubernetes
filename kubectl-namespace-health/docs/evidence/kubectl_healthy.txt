@@ -1,0 +1,59 @@
+$ /Users/ayaanjindal/.docker/bin/kubectl ns-health --scenario healthy --json
+{
+  "exit_code": 0,
+  "namespace": "demo",
+  "pods": [
+    {
+      "name": "api",
+      "namespace": "demo",
+      "phase": "Running",
+      "ready": true,
+      "restarts": 1,
+      "terminating": false,
+      "waiting_reasons": []
+    },
+    {
+      "name": "completed-job",
+      "namespace": "demo",
+      "phase": "Succeeded",
+      "ready": false,
+      "restarts": 20,
+      "terminating": false,
+      "waiting_reasons": []
+    },
+    {
+      "name": "worker",
+      "namespace": "demo",
+      "phase": "Running",
+      "ready": true,
+      "restarts": 0,
+      "terminating": false,
+      "waiting_reasons": []
+    }
+  ],
+  "reasons": [
+    "all evaluated pods ready; no configured health indicators triggered"
+  ],
+  "recent_warning_events": [],
+  "reference_time": "2026-11-10T12:00:00+00:00",
+  "source": "simulation",
+  "status": "HEALTHY",
+  "summary": {
+    "completed_pods": 1,
+    "evaluated_pods": 2,
+    "not_ready_pods": 0,
+    "ready_pods": 2,
+    "recent_warning_records": 0,
+    "total_pods": 3,
+    "total_restarts": 1
+  },
+  "thresholds": {
+    "recent_minutes": 60,
+    "restart_threshold": 5
+  },
+  "timestamp_diagnostics": {
+    "unusable_warning_records": []
+  }
+}
+
+Process exit: 0

@@ -1,0 +1,58 @@
+[
+  {
+    "scenario": "healthy",
+    "status": "HEALTHY",
+    "exit_code": 0,
+    "summary": {
+      "completed_pods": 1,
+      "evaluated_pods": 2,
+      "not_ready_pods": 0,
+      "ready_pods": 2,
+      "recent_warning_records": 0,
+      "total_pods": 3,
+      "total_restarts": 1
+    }
+  },
+  {
+    "scenario": "degraded",
+    "status": "DEGRADED",
+    "exit_code": 1,
+    "summary": {
+      "completed_pods": 1,
+      "evaluated_pods": 2,
+      "not_ready_pods": 1,
+      "ready_pods": 1,
+      "recent_warning_records": 1,
+      "total_pods": 3,
+      "total_restarts": 8
+    }
+  },
+  {
+    "scenario": "critical",
+    "status": "CRITICAL",
+    "exit_code": 2,
+    "summary": {
+      "completed_pods": 1,
+      "evaluated_pods": 2,
+      "not_ready_pods": 2,
+      "ready_pods": 0,
+      "recent_warning_records": 1,
+      "total_pods": 3,
+      "total_restarts": 14
+    }
+  },
+  {
+    "scenario": "empty",
+    "status": "UNKNOWN",
+    "exit_code": 3,
+    "summary": {
+      "completed_pods": 0,
+      "evaluated_pods": 0,
+      "not_ready_pods": 0,
+      "ready_pods": 0,
+      "recent_warning_records": 0,
+      "total_pods": 0,
+      "total_restarts": 0
+    }
+  }
+]

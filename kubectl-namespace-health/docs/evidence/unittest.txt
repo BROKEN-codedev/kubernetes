@@ -1,0 +1,55 @@
+$ /Users/ayaanjindal/.codex/.chatgpt-projects/g-p-6ad8acb044d4819189c30d81d1fade5f/output/ojt/kubectl-namespace-health/.venv/bin/python -m unittest discover -s tests -v
+test_custom_fixture_options_and_empty_namespace (test_cli.CliTests.test_custom_fixture_options_and_empty_namespace) ... ok
+test_default_text_report_includes_required_context (test_cli.CliTests.test_default_text_report_includes_required_context) ... ok
+test_directory_and_deeply_nested_json_are_input_errors (test_cli.CliTests.test_directory_and_deeply_nested_json_are_input_errors) ... ok
+test_four_scenarios_and_exit_codes (test_cli.CliTests.test_four_scenarios_and_exit_codes) ... ok
+test_help_and_version (test_cli.CliTests.test_help_and_version) ... ok
+test_invalid_argument_usage_exits_two (test_cli.CliTests.test_invalid_argument_usage_exits_two) ... ok
+test_launcher_works_outside_repository (test_cli.CliTests.test_launcher_works_outside_repository) ... ok
+test_missing_and_invalid_files_are_not_empty_success (test_cli.CliTests.test_missing_and_invalid_files_are_not_empty_success) ... ok
+test_module_entry_point_uses_real_process_exit (test_cli.CliTests.test_module_entry_point_uses_real_process_exit) ... ok
+test_nonstandard_constant_names_inside_strings_are_valid (test_cli.CliTests.test_nonstandard_constant_names_inside_strings_are_valid) ... ok
+test_nonstandard_json_constants_are_input_errors (test_cli.CliTests.test_nonstandard_json_constants_are_input_errors) ... ok
+test_now_override_is_validated (test_cli.CliTests.test_now_override_is_validated) ... ok
+test_oversized_fixture_is_an_input_error (test_cli.CliTests.test_oversized_fixture_is_an_input_error) ... ok
+test_oversized_json_integer_is_a_structured_input_error (test_cli.CliTests.test_oversized_json_integer_is_a_structured_input_error) ... ok
+test_text_and_json_agree_on_health_counters_and_reasons (test_cli.CliTests.test_text_and_json_agree_on_health_counters_and_reasons) ... ok
+test_text_errors_go_to_stderr (test_cli.CliTests.test_text_errors_go_to_stderr) ... ok
+test_unknown_namespace_error_is_json (test_cli.CliTests.test_unknown_namespace_error_is_json) ... ok
+test_critical_evidence_wins_over_unknown_warning_recency (test_health.EventTests.test_critical_evidence_wins_over_unknown_warning_recency) ... ok
+test_invalid_timestamp_tries_valid_fallback (test_health.EventTests.test_invalid_timestamp_tries_valid_fallback) ... ok
+test_override_now_is_used (test_health.EventTests.test_override_now_is_used) ... ok
+test_series_precedence_over_last_timestamp (test_health.EventTests.test_series_precedence_over_last_timestamp) ... ok
+test_timezone_and_count_field (test_health.EventTests.test_timezone_and_count_field) ... ok
+test_unknown_warning_recency_takes_precedence_over_degraded (test_health.EventTests.test_unknown_warning_recency_takes_precedence_over_degraded) ... ok
+test_unusable_timestamp_does_not_cross_namespace_or_event_type (test_health.EventTests.test_unusable_timestamp_does_not_cross_namespace_or_event_type) ... ok
+test_unusable_warning_timestamps_are_reported (test_health.EventTests.test_unusable_warning_timestamps_are_reported) ... ok
+test_window_includes_both_bounds_but_not_old_or_future (test_health.EventTests.test_window_includes_both_bounds_but_not_old_or_future) ... ok
+test_analysis_does_not_modify_input (test_health.HealthTests.test_analysis_does_not_modify_input) ... ok
+test_completed_pods_do_not_distort_readiness_or_restarts (test_health.HealthTests.test_completed_pods_do_not_distort_readiness_or_restarts) ... ok
+test_duplicate_namespaces_pods_and_container_records_are_rejected (test_health.HealthTests.test_duplicate_namespaces_pods_and_container_records_are_rejected) ... ok
+test_empty_and_all_completed_are_unknown (test_health.HealthTests.test_empty_and_all_completed_are_unknown) ... ok
+test_failed_pod_still_critical_when_another_pod_is_ready (test_health.HealthTests.test_failed_pod_still_critical_when_another_pod_is_ready) ... ok
+test_healthy_counts_and_truthful_source (test_health.HealthTests.test_healthy_counts_and_truthful_source) ... ok
+test_invalid_metadata_phase_and_conditions_are_rejected (test_health.HealthTests.test_invalid_metadata_phase_and_conditions_are_rejected) ... ok
+test_invalid_options_and_naive_times_are_rejected (test_health.HealthTests.test_invalid_options_and_naive_times_are_rejected) ... ok
+test_invalid_required_structures_are_rejected (test_health.HealthTests.test_invalid_required_structures_are_rejected) ... ok
+test_invalid_restart_counts_and_status_arrays_are_rejected (test_health.HealthTests.test_invalid_restart_counts_and_status_arrays_are_rejected) ... ok
+test_malformed_conditions_and_resource_kinds_are_rejected (test_health.HealthTests.test_malformed_conditions_and_resource_kinds_are_rejected) ... ok
+test_missing_conditions_and_deleting_pod_not_ready (test_health.HealthTests.test_missing_conditions_and_deleting_pod_not_ready) ... ok
+test_missing_optional_container_statuses_is_safe (test_health.HealthTests.test_missing_optional_container_statuses_is_safe) ... ok
+test_namespace_filters_both_resources (test_health.HealthTests.test_namespace_filters_both_resources) ... ok
+test_no_ready_failed_and_waiting_reasons_are_critical (test_health.HealthTests.test_no_ready_failed_and_waiting_reasons_are_critical) ... ok
+test_restart_counts_include_init_and_every_container_once (test_health.HealthTests.test_restart_counts_include_init_and_every_container_once) ... ok
+test_threshold_boundaries_are_per_pod (test_health.HealthTests.test_threshold_boundaries_are_per_pod) ... ok
+test_unknown_namespace_is_not_an_empty_namespace (test_health.HealthTests.test_unknown_namespace_is_not_an_empty_namespace) ... ok
+test_unready_pod_does_not_hide_behind_running (test_health.HealthTests.test_unready_pod_does_not_hide_behind_running) ... ok
+test_warning_window_outside_supported_date_range_is_rejected (test_health.HealthTests.test_warning_window_outside_supported_date_range_is_rejected) ... ok
+test_wheel_install_runs_offline_outside_source_tree (test_packaging.PackagingTests.test_wheel_install_runs_offline_outside_source_tree) ... ok
+
+----------------------------------------------------------------------
+Ran 47 tests in 2.264s
+
+OK
+
+Process exit: 0

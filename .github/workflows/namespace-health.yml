@@ -1,0 +1,39 @@
+name: Namespace health checks
+
+on:
+  push:
+    branches: ["ojt/namespace-health"]
+    paths:
+      - "kubectl-namespace-health/**"
+      - ".github/workflows/namespace-health.yml"
+  pull_request:
+    paths:
+      - "kubectl-namespace-health/**"
+      - ".github/workflows/namespace-health.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.14"]
+    defaults:
+      run:
+        working-directory: kubectl-namespace-health
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: kubectl-namespace-health
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: python -m pip install "coverage>=7.6"
+      - run: python scripts/build_wheel.py
+      - run: python -m pip install --no-index dist/kubectl_namespace_health-1.0.0-py3-none-any.whl
+      - run: python -m coverage run --source=ns_health -m unittest discover -s tests -v
+      - run: python -m coverage report -m --fail-under=85

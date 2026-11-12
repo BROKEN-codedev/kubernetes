@@ -1,0 +1,38 @@
+test_nonstandard_json_constants_are_input_errors (tests.test_cli.CliTests.test_nonstandard_json_constants_are_input_errors) ... 
+  test_nonstandard_json_constants_are_input_errors (tests.test_cli.CliTests.test_nonstandard_json_constants_are_input_errors) (constant='NaN') ... FAIL
+  test_nonstandard_json_constants_are_input_errors (tests.test_cli.CliTests.test_nonstandard_json_constants_are_input_errors) (constant='Infinity') ... FAIL
+  test_nonstandard_json_constants_are_input_errors (tests.test_cli.CliTests.test_nonstandard_json_constants_are_input_errors) (constant='-Infinity') ... FAIL
+
+======================================================================
+FAIL: test_nonstandard_json_constants_are_input_errors (tests.test_cli.CliTests.test_nonstandard_json_constants_are_input_errors) (constant='NaN')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ayaanjindal/.codex/.chatgpt-projects/g-p-6ad8acb044d4819189c30d81d1fade5f/output/ojt/kubectl-namespace-health/tests/test_cli.py", line 103, in test_nonstandard_json_constants_are_input_errors
+    self.assertEqual(code, 3)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^
+AssertionError: 0 != 3
+
+======================================================================
+FAIL: test_nonstandard_json_constants_are_input_errors (tests.test_cli.CliTests.test_nonstandard_json_constants_are_input_errors) (constant='Infinity')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ayaanjindal/.codex/.chatgpt-projects/g-p-6ad8acb044d4819189c30d81d1fade5f/output/ojt/kubectl-namespace-health/tests/test_cli.py", line 103, in test_nonstandard_json_constants_are_input_errors
+    self.assertEqual(code, 3)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^
+AssertionError: 0 != 3
+
+======================================================================
+FAIL: test_nonstandard_json_constants_are_input_errors (tests.test_cli.CliTests.test_nonstandard_json_constants_are_input_errors) (constant='-Infinity')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ayaanjindal/.codex/.chatgpt-projects/g-p-6ad8acb044d4819189c30d81d1fade5f/output/ojt/kubectl-namespace-health/tests/test_cli.py", line 103, in test_nonstandard_json_constants_are_input_errors
+    self.assertEqual(code, 3)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^
+AssertionError: 0 != 3
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=3)
+
+Process exit: 1

@@ -1,0 +1,159 @@
+{
+  "metadata": {
+    "referenceTime": "2026-11-10T12:00:00Z",
+    "namespaces": [
+      "demo",
+      "other"
+    ]
+  },
+  "pods": {
+    "apiVersion": "v1",
+    "kind": "PodList",
+    "items": [
+      {
+        "metadata": {
+          "name": "api",
+          "namespace": "demo"
+        },
+        "status": {
+          "phase": "Running",
+          "conditions": [
+            {
+              "type": "Ready",
+              "status": "True"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "name": "app",
+              "ready": true,
+              "restartCount": 1
+            }
+          ]
+        }
+      },
+      {
+        "metadata": {
+          "name": "worker",
+          "namespace": "demo"
+        },
+        "status": {
+          "phase": "Running",
+          "conditions": [
+            {
+              "type": "Ready",
+              "status": "False"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "name": "app",
+              "ready": false,
+              "restartCount": 6
+            }
+          ],
+          "initContainerStatuses": [
+            {
+              "name": "init",
+              "restartCount": 1
+            }
+          ]
+        }
+      },
+      {
+        "metadata": {
+          "name": "completed-job",
+          "namespace": "demo"
+        },
+        "status": {
+          "phase": "Succeeded",
+          "conditions": [
+            {
+              "type": "Ready",
+              "status": "True"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "name": "app",
+              "ready": true,
+              "restartCount": 20
+            }
+          ]
+        }
+      },
+      {
+        "metadata": {
+          "name": "other-broken",
+          "namespace": "other"
+        },
+        "status": {
+          "phase": "Failed",
+          "conditions": [
+            {
+              "type": "Ready",
+              "status": "True"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "name": "app",
+              "ready": true,
+              "restartCount": 0
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "events": {
+    "apiVersion": "v1",
+    "kind": "EventList",
+    "items": [
+      {
+        "metadata": {
+          "name": "started",
+          "namespace": "demo"
+        },
+        "type": "Normal",
+        "reason": "Unhealthy",
+        "message": "Probe failed",
+        "lastTimestamp": "2026-11-10T11:30:00Z",
+        "count": 40
+      },
+      {
+        "metadata": {
+          "name": "old",
+          "namespace": "demo"
+        },
+        "type": "Warning",
+        "reason": "Unhealthy",
+        "message": "Probe failed",
+        "lastTimestamp": "2026-11-10T09:00:00Z",
+        "count": 40
+      },
+      {
+        "metadata": {
+          "name": "other-warning",
+          "namespace": "other"
+        },
+        "type": "Warning",
+        "reason": "Unhealthy",
+        "message": "Probe failed",
+        "lastTimestamp": "2026-11-10T11:30:00Z",
+        "count": 40
+      },
+      {
+        "metadata": {
+          "name": "readiness-failure",
+          "namespace": "demo"
+        },
+        "type": "Warning",
+        "reason": "Unhealthy",
+        "message": "Probe failed",
+        "lastTimestamp": "2026-11-10T11:30:00Z",
+        "count": 40
+      }
+    ]
+  }
+}

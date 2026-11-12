@@ -1,0 +1,18 @@
+Namespace: demo | CRITICAL (exit 2)
+Source: simulation | Reference time: 2026-11-10T12:00:00+00:00
+Pods: 3 total; 1 completed; 0/2 evaluated ready; 2 not ready
+Cumulative restarts: 14 | Recent Warning records: 1
+Restart threshold: 5 per pod | Warning window: 60 minutes
+Reasons:
+  - api: CrashLoopBackOff
+  - worker: pod phase Failed
+  - no evaluated pods are ready
+  - 2 pod(s) not ready
+  - api: 12 cumulative restarts >= 5
+  - 1 recent Warning event record(s)
+Pods:
+  api: Running, ready=False, restarts=12
+  completed-job: Succeeded, ready=False, restarts=20
+  worker: Failed, ready=False, restarts=2
+Recent Warning events:
+  2026-11-10T11:30:00+00:00 crash-warning: Unhealthy - Probe failed

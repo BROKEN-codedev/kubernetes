@@ -1,0 +1,11 @@
+Namespace: demo | HEALTHY (exit 0)
+Source: simulation | Reference time: 2026-11-10T12:00:00+00:00
+Pods: 3 total; 1 completed; 2/2 evaluated ready; 0 not ready
+Cumulative restarts: 1 | Recent Warning records: 0
+Restart threshold: 5 per pod | Warning window: 60 minutes
+Reasons:
+  - all evaluated pods ready; no configured health indicators triggered
+Pods:
+  api: Running, ready=True, restarts=1
+  completed-job: Succeeded, ready=False, restarts=20
+  worker: Running, ready=True, restarts=0

@@ -1,0 +1,7 @@
+$ /Users/ayaanjindal/.codex/.chatgpt-projects/g-p-6ad8acb044d4819189c30d81d1fade5f/output/ojt/kubectl-namespace-health/.venv/bin/python -m pip install --no-index --force-reinstall dist/kubectl_namespace_health-1.0.0-py3-none-any.whl
+Processing ./dist/kubectl_namespace_health-1.0.0-py3-none-any.whl
+Installing collected packages: kubectl-namespace-health
+Successfully installed kubectl-namespace-health-1.0.0
+WARNING: The directory '/Users/ayaanjindal/Library/Caches/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag.
+
+Process exit: 0

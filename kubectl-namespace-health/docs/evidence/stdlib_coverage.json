@@ -1,0 +1,45 @@
+{
+  "measurement": "stdlib trace executed-line coverage; not coverage.py",
+  "files": [
+    {
+      "file": "ns_health/__init__.py",
+      "executable_lines": 2,
+      "executed_lines": 0,
+      "missing": [
+        1,
+        3
+      ]
+    },
+    {
+      "file": "ns_health/__main__.py",
+      "executable_lines": 2,
+      "executed_lines": 0,
+      "missing": [
+        1,
+        3
+      ]
+    },
+    {
+      "file": "ns_health/cli.py",
+      "executable_lines": 80,
+      "executed_lines": 78,
+      "missing": [
+        34,
+        71
+      ]
+    },
+    {
+      "file": "ns_health/health.py",
+      "executable_lines": 170,
+      "executed_lines": 169,
+      "missing": [
+        115
+      ]
+    }
+  ],
+  "covered": 247,
+  "total": 254,
+  "percent": 97.24,
+  "tests_run": 47,
+  "successful": true
+}

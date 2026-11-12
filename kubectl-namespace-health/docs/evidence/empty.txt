@@ -1,0 +1,7 @@
+Namespace: demo | UNKNOWN (exit 3)
+Source: simulation | Reference time: 2026-11-10T12:00:00+00:00
+Pods: 0 total; 0 completed; 0/0 evaluated ready; 0 not ready
+Cumulative restarts: 0 | Recent Warning records: 0
+Restart threshold: 5 per pod | Warning window: 60 minutes
+Reasons:
+  - no evaluated workloads (empty or completed only)

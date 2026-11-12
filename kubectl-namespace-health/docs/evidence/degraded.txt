@@ -1,0 +1,15 @@
+Namespace: demo | DEGRADED (exit 1)
+Source: simulation | Reference time: 2026-11-10T12:00:00+00:00
+Pods: 3 total; 1 completed; 1/2 evaluated ready; 1 not ready
+Cumulative restarts: 8 | Recent Warning records: 1
+Restart threshold: 5 per pod | Warning window: 60 minutes
+Reasons:
+  - 1 pod(s) not ready
+  - worker: 7 cumulative restarts >= 5
+  - 1 recent Warning event record(s)
+Pods:
+  api: Running, ready=True, restarts=1
+  completed-job: Succeeded, ready=False, restarts=20
+  worker: Running, ready=False, restarts=7
+Recent Warning events:
+  2026-11-10T11:30:00+00:00 readiness-failure: Unhealthy - Probe failed

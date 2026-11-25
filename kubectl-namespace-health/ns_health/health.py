@@ -44,7 +44,6 @@ def parse_time(value: Any) -> datetime:
 
 def resource_metadata(resource: dict, namespaces: list[str], label: str) -> dict:
     metadata = object_(resource.get("metadata"), f"{label}.metadata")
-    text(metadata.get("name"), f"{label}.metadata.name")
     namespace = text(metadata.get("namespace"), f"{label}.metadata.namespace")
     if namespace not in namespaces:
         raise InputError(f"{label} refers to undeclared namespace {namespace!r}")
@@ -58,21 +57,21 @@ def resource_items(data: dict, key: str, kind: str) -> list[dict]:
     return array(resource.get("items"), f"{key}.items")
 
 
-def pod_detail(pod: dict, namespaces: list[str]) -> dict:
-    pod = object_(pod, "pod")
-    meta = resource_metadata(pod, namespaces, "pod")
+def pod_detail(pod: dict, meta: dict) -> dict:
     status = object_(pod.get("status"), "pod.status")
     phase = status.get("phase")
     if phase not in ("Pending", "Running", "Succeeded", "Failed", "Unknown"):
         raise InputError("pod.status.phase is missing or unsupported")
     conditions = array(status.get("conditions", []), "pod.status.conditions")
-    ready = False
+    ready = None
     for raw in conditions:
         condition = object_(raw, "pod condition")
         text(condition.get("type"), "condition.type")
         if condition.get("status") not in ("True", "False", "Unknown"):
             raise InputError("condition.status must be True, False or Unknown as a string")
         if condition["type"] == "Ready":
+            if ready is not None:
+                raise InputError("duplicate Ready condition")
             ready = condition["status"] == "True"
     deleting = meta.get("deletionTimestamp") is not None
     if deleting:
@@ -94,7 +93,7 @@ def pod_detail(pod: dict, namespaces: list[str]) -> dict:
                 if info.get("reason") is not None:
                     waiting.append(text(info["reason"], "waiting.reason"))
     return {"name": meta["name"], "namespace": meta["namespace"], "phase": phase,
-            "ready": phase == "Running" and ready and not deleting, "terminating": deleting,
+            "ready": phase == "Running" and ready is True and not deleting, "terminating": deleting,
             "restarts": restarts, "waiting_reasons": sorted(waiting)}
 
 
@@ -137,23 +136,34 @@ def analyze(data: dict, namespace: str = "demo", recent_minutes: int = 60,
     except (OverflowError, ValueError) as exc:
         raise InputError("recent_minutes is outside the supported date range") from exc
 
-    all_pods = [pod_detail(p, namespaces) for p in resource_items(data, "pods", "PodList")]
-    identities = [(p["namespace"], p["name"]) for p in all_pods]
-    if len(set(identities)) != len(identities):
-        raise InputError("duplicate pod identity in snapshot")
-    pods = sorted((p for p in all_pods if p["namespace"] == namespace), key=lambda p: p["name"])
+    pods = []
+    names = set()
+    for raw in resource_items(data, "pods", "PodList"):
+        pod = object_(raw, "pod")
+        metadata = resource_metadata(pod, namespaces, "pod")
+        if metadata["namespace"] != namespace:
+            continue
+        text(metadata.get("name"), "pod.metadata.name")
+        if metadata["name"] in names:
+            raise InputError("duplicate pod identity in snapshot")
+        names.add(metadata["name"])
+        pods.append(pod_detail(pod, metadata))
+    pods.sort(key=lambda p: p["name"])
     evaluated = [p for p in pods if p["phase"] != "Succeeded"]
     ready = sum(p["ready"] for p in evaluated)
     warnings, unusable = [], []
     for raw in resource_items(data, "events", "EventList"):
         event = object_(raw, "event")
         emeta = resource_metadata(event, namespaces, "event")
+        if emeta["namespace"] != namespace:
+            continue
+        text(emeta.get("name"), "event.metadata.name")
         event_type = text(event.get("type"), "event.type")
         for key in ("reason", "message"):
             if key in event:
                 if not isinstance(event[key], str):
                     raise InputError(f"event.{key} must be a string")
-        if emeta["namespace"] != namespace or event_type != "Warning":
+        if event_type != "Warning":
             continue
         stamp = warning_time(event)
         if stamp is None:

@@ -1,5 +1,7 @@
 # Namespace Health Plugin Implementation Plan
 
+Historical November 2026 record. See [current validation](VALIDATION.md) for subsequent results.
+
 **Goal:** Deliver the original Python simulation plugin with reproducible examples, tests and evidence.
 **Architecture:** Validate Kubernetes-shaped JSON, select one namespace, compute a pure health report, then render text/JSON in a thin CLI. Bundle four fixed-time scenarios. No cluster access.
 **Tech stack:** Python 3.11+, standard-library runtime, unittest; coverage.py when available.

@@ -4,7 +4,7 @@ An OJT project by **Ayaan Jindal**, B.Tech in Applied AI, Semester 1, Polaris Sc
 
 Engineers often inspect separate pod and event outputs to assess a namespace. This Python CLI combines Pod Ready conditions, cumulative container restarts and recent Warning event records into one explainable report.
 
-**This is a working simulation, not a connection to a live Kubernetes cluster.** It reads bundled or custom Kubernetes-shaped JSON. It does not repair Kubernetes, change a cluster or represent an upstream Kubernetes contribution. The initial implementation was prepared on **11 November 2026** and the final audit, input-validation fix and expanded checks on **12 November 2026**. AI assistance was used; the student should review the code and demonstrate understanding.
+**This is a working simulation, not a connection to a live Kubernetes cluster.** It reads bundled or custom Kubernetes-shaped JSON. It does not repair Kubernetes, change a cluster or represent an upstream Kubernetes contribution. The initial implementation was prepared on **11 November 2026**. AI assistance was used; the student should review the code and demonstrate understanding.
 
 See [RUN_AND_TEST.md](RUN_AND_TEST.md) for a copy-and-paste setup and testing guide, and [docs/CHANGES.md](docs/CHANGES.md) for the final audit changes.
 
@@ -24,7 +24,7 @@ Nonzero exit codes for degraded, critical and empty are intentional health resul
 
 ## Install offline into a local virtual environment
 
-The ZIP includes an installable wheel under `dist/`. It can also be built using the standard library:
+The project includes an installable wheel under `dist/`. It can also be built using the standard library:
 
 ```bash
 python3 scripts/build_wheel.py
@@ -89,7 +89,7 @@ Argparse usage failures also exit **2**, but print usage to stderr rather than a
 - Event timestamp precedence: `series.lastObservedTime`, `lastTimestamp`, `eventTime`, `metadata.creationTimestamp`. Try the next candidate when one is invalid. Convert offsets to UTC. Include exact lower/upper bounds; exclude future events. Count records, not historical `count` values.
 - Warning records without a usable timestamp appear in diagnostics. Unless an already-known critical condition wins, they make recency assessment UNKNOWN rather than silently healthy.
 - Pending-only or terminating-only namespaces can be transient, but the zero-ready policy deliberately flags them CRITICAL. The reasons make this choice visible.
-- Required input metadata, PodList/EventList containers and pod status structures are validated before namespace analysis; malformed required data in another namespace still invalidates the snapshot. Optional event timestamps/series are interpreted only for selected Warning events. Unknown additional fields are ignored. Custom files have a 16 MiB limit. Nonstandard JSON constants (`NaN`, `Infinity`, `-Infinity`) are rejected even in unused fields.
+- Snapshot structure and resource namespace membership are validated first. Resource details are validated only within the selected namespace. Conflicting or duplicate Ready conditions are invalid. Optional event timestamps/series are interpreted only for selected Warning events. Unknown additional fields are ignored. Custom files have a 16 MiB limit. Nonstandard JSON constants (`NaN`, `Infinity`, `-Infinity`) are rejected even in unused fields.
 
 ## Fixture shape
 
@@ -125,9 +125,9 @@ The stdlib script records **executed-line coverage**, not coverage.py statement 
 .venv/bin/python -m coverage report -m --fail-under=85
 ```
 
-Create the virtual environment using the installation instructions first. The final local suite passes **47 tests**. The standard-library trace measurement is **97.24% (247/254 executable lines)**; it is a different metric from coverage.py. The formal coverage.py check remains unrun here because the dependency could not be downloaded.
+See [validation results](docs/VALIDATION.md) for measured statement and branch coverage.
 
-GitHub Actions configures the formal statement check for Python 3.11, 3.12 and 3.14, with a 10-minute job limit. A workflow file is not evidence of a successful remote run. See `docs/VALIDATION.md` for actual local checks and current limitations.
+GitHub Actions configures the formal statement check for Python 3.11, 3.12, 3.13 and 3.14, with a 10-minute job limit. A workflow file is not evidence of a successful remote run. See `docs/VALIDATION.md` for actual local checks and current limitations.
 
 ## Project map
 
@@ -140,7 +140,7 @@ GitHub Actions configures the formal statement check for Python 3.11, 3.12 and 3
 
 ## Submission and learning
 
-Review the code and rehearse `docs/DEMO.md`. Upload the source to your own repository, inspect the actual remote CI result, record a real demo video, and obtain mentor review. None of those external outcomes is claimed by the local build. Future work can add a read-only kubectl adapter or configurable policies; neither is implemented here.
+Review the code and rehearse the demonstration in `docs/DEMO.md` before mentor review.
 
 Official references:
 

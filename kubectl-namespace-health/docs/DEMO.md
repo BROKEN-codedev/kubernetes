@@ -17,7 +17,7 @@ Explain the status/reasons. Expected exits are 0/1/2/3. On macOS/zsh, `echo $?` 
 
 **1:15-1:40:** Show `python3 -m ns_health --scenario degraded --json`. Explain namespace isolation, cumulative restarts and the fixed event-time window.
 
-**1:40-2:10:** Run `python3 -m unittest discover -s tests -q` (final local result: 47 passing tests) and show the real validation report. Explain that one test installs a wheel in a fresh environment and verifies execution from another working directory. Show `docs/evidence/stdlib_coverage.json`: the final trace result is 97.24% executed-line coverage. State that formal coverage.py measurement remains pending until the development dependency can be installed; do not call the trace result statement or branch coverage.
+**1:40–2:10** Run `python3 -m unittest discover -s tests -q`. Show the measured results in `docs/VALIDATION.md` and explain how the packaging test exercises the installed wheel.
 
 **2:10-2:40:** Explain limitations: no live cluster, thresholds are application policies, no automatic repair. State which external checks remain pending. Demonstrate kubectl invocation only if installed and configured locally.
 

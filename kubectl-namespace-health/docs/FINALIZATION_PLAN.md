@@ -1,5 +1,7 @@
 # Finalization plan — 12 November 2026
 
+Historical November 2026 record. See [current validation](VALIDATION.md) for subsequent results.
+
 Goal: finish the existing simulation against docs/PRD.md, README policy and the shared behavior contract. Keep the standard-library runtime, existing CLI and namespace health rules.
 
 - [x] Strengthen health tests for unknown-warning/critical precedence, failed pods alongside ready pods, invalid resource identities and date-range overflow. Tests use literal status/counter expectations.

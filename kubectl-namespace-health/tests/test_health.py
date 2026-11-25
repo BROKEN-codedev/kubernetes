@@ -71,6 +71,20 @@ class HealthTests(unittest.TestCase):
         self.assertEqual(r["summary"]["total_pods"], 1)
         self.assertEqual(r["summary"]["recent_warning_records"], 0)
 
+    def test_foreign_resource_details_do_not_invalidate_selected_report(self):
+        foreign = {"metadata": {"namespace": "other"}}
+        self.assertEqual(analyze(snapshot([pod(), foreign], [foreign])), analyze(snapshot()))
+
+    def test_duplicate_ready_conditions_are_ambiguous(self):
+        p = pod()
+        p["status"]["conditions"].append({"type": "Ready", "status": "False"})
+        with self.assertRaisesRegex(InputError, "duplicate Ready"):
+            analyze(snapshot([p]))
+
+    def test_shorter_window_excludes_warning(self):
+        self.assertEqual(analyze(snapshot(events=[event()]), recent_minutes=29)["status"], "HEALTHY")
+        self.assertEqual(analyze(snapshot(events=[event()]), recent_minutes=30)["status"], "DEGRADED")
+
     def test_unknown_namespace_is_not_an_empty_namespace(self):
         with self.assertRaises(InputError):
             analyze(snapshot(), "absent")

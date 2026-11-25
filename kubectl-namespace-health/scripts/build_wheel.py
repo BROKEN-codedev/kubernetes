@@ -25,8 +25,11 @@ def build_wheel(destination: Path) -> Path:
             entries[source.relative_to(root).as_posix()] = source.read_bytes()
     entries[f"{info}/METADATA"] = (
         f"Metadata-Version: 2.1\nName: {project['name']}\nVersion: {version}\n"
-        f"Summary: {project['description']}\nRequires-Python: >=3.11\n"
-        "Author: Ayaan Jindal\nLicense: MIT\n\n"
+        f"Summary: {project['description']}\nRequires-Python: {project['requires-python']}\n"
+        "Author: Ayaan Jindal\nLicense: MIT\n"
+        "Provides-Extra: dev\n"
+        + "".join(f'Requires-Dist: {dep}; extra == "dev"\n' for dep in project["optional-dependencies"]["dev"])
+        + "\n"
         "Simulated Kubernetes namespace readiness, restart and event analysis.\n"
     ).encode()
     entries[f"{info}/WHEEL"] = b"Wheel-Version: 1.0\nGenerator: ns-health-offline-builder\nRoot-Is-Purelib: true\nTag: py3-none-any\n"

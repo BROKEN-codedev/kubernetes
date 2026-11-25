@@ -1,5 +1,7 @@
 # Final audit changes — 12 November 2026
 
+Historical November 2026 record. See [current validation](VALIDATION.md) for subsequent results.
+
 ## Existing implementation reviewed
 
 Reviewed the chosen Python namespace-health simulation against its PRD, shared contract and README. The existing project already provided readiness/restart/warning analysis, namespace filtering, deterministic fixtures, JSON/text output, exit codes, installable packaging and a CI workflow. The starting 35-test suite passed.

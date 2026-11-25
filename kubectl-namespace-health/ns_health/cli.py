@@ -76,9 +76,14 @@ def main(argv: list[str] | None = None) -> int:
     args = parser().parse_args(argv)
     try:
         if args.fixture is not None:
-            if args.fixture.stat().st_size > 16 * 1024 * 1024:
+            limit = 16 * 1024 * 1024
+            if not args.fixture.is_file():
+                raise InputError("fixture must be a readable regular file")
+            with args.fixture.open("rb") as stream:
+                payload = stream.read(limit + 1)
+            if len(payload) > limit:
                 raise InputError("fixture exceeds the 16 MiB input limit")
-            content = args.fixture.read_text(encoding="utf-8")
+            content = payload.decode("utf-8")
         else:
             content = files("ns_health").joinpath("data", (args.scenario or "healthy") + ".json").read_text(encoding="utf-8")
         try:

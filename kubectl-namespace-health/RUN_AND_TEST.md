@@ -11,7 +11,7 @@ python3 -m ns_health --scenario healthy
 python3 -m unittest discover -s tests -v
 ```
 
-The final local result is 47 passing tests. Installation testing needs standard Python venv/ensurepip support; no cluster is required.
+The final local result is 50 passing tests. Installation testing needs standard Python venv/ensurepip support; no cluster is required.
 
 ## Local offline installation
 
@@ -63,7 +63,7 @@ python -m unittest discover -s tests -v
 python scripts/check_stdlib_coverage.py
 ```
 
-The trace helper runs the suite and saves `docs/evidence/stdlib_coverage.json`. The final observed result is 247/254 executable lines (97.24%); this is not formal statement or branch coverage.
+The trace helper writes its separate executed-line measurement to `docs/evidence/stdlib_coverage.json`.
 
 ## Formal coverage (requires a dependency download)
 
@@ -75,7 +75,7 @@ python -m coverage run --source=ns_health -m unittest discover -s tests -v
 python -m coverage report -m --fail-under=85
 ```
 
-The last command enforces the 85% statement target. This check could not run in the final local environment because coverage.py was unavailable and the download failed. The stdlib result does not substitute for this acceptance gate.
+The final command enforces the 85% statement target.
 
 Optional branch measurement, kept separate so the statement report remains reproducible:
 
@@ -98,4 +98,4 @@ kubectl ns-health --scenario critical --json
 
 These commands exercise local plugin execution with fixture data. No Kubernetes cluster is contacted. If a new terminal cannot find the command, activate this project's `.venv` there first.
 
-Review `docs/DEMO.md` for the demonstration script and viva answers. Formal coverage, remote CI, repository publishing, a real demo recording and mentor review remain separate final steps as recorded in `docs/VALIDATION.md`.
+See `docs/VALIDATION.md` for measured results and `docs/DEMO.md` for the demo script.

@@ -78,6 +78,160 @@
       },
       {
         "metadata": {
+          "name": "cache",
+          "namespace": "demo"
+        },
+        "status": {
+          "phase": "Running",
+          "conditions": [
+            {
+              "type": "Ready",
+              "status": "True"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "name": "app",
+              "ready": true,
+              "restartCount": 0
+            }
+          ]
+        }
+      },
+      {
+        "metadata": {
+          "name": "frontend",
+          "namespace": "demo"
+        },
+        "status": {
+          "phase": "Running",
+          "conditions": [
+            {
+              "type": "Ready",
+              "status": "True"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "name": "app",
+              "ready": true,
+              "restartCount": 1
+            }
+          ]
+        }
+      },
+      {
+        "metadata": {
+          "name": "gateway",
+          "namespace": "demo"
+        },
+        "status": {
+          "phase": "Running",
+          "conditions": [
+            {
+              "type": "Ready",
+              "status": "True"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "name": "app",
+              "ready": true,
+              "restartCount": 0
+            }
+          ]
+        }
+      },
+      {
+        "metadata": {
+          "name": "metrics-agent",
+          "namespace": "demo"
+        },
+        "status": {
+          "phase": "Running",
+          "conditions": [
+            {
+              "type": "Ready",
+              "status": "True"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "name": "app",
+              "ready": true,
+              "restartCount": 0
+            }
+          ]
+        }
+      },
+      {
+        "metadata": {
+          "name": "migration",
+          "namespace": "demo"
+        },
+        "status": {
+          "phase": "Running",
+          "conditions": [
+            {
+              "type": "Ready",
+              "status": "True"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "name": "app",
+              "ready": true,
+              "restartCount": 0
+            }
+          ]
+        }
+      },
+      {
+        "metadata": {
+          "name": "scheduler",
+          "namespace": "demo"
+        },
+        "status": {
+          "phase": "Running",
+          "conditions": [
+            {
+              "type": "Ready",
+              "status": "True"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "name": "app",
+              "ready": true,
+              "restartCount": 0
+            }
+          ]
+        }
+      },
+      {
+        "metadata": {
+          "name": "search",
+          "namespace": "demo"
+        },
+        "status": {
+          "phase": "Running",
+          "conditions": [
+            {
+              "type": "Ready",
+              "status": "True"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "name": "app",
+              "ready": true,
+              "restartCount": 0
+            }
+          ]
+        }
+      },
+      {
+        "metadata": {
           "name": "other-broken",
           "namespace": "other"
         },

@@ -26,7 +26,7 @@
           "containerStatuses": [
             {
               "name": "app",
-              "ready": true,
+              "ready": false,
               "restartCount": 12,
               "state": {
                 "waiting": {
@@ -77,6 +77,164 @@
               "name": "app",
               "ready": true,
               "restartCount": 20
+            }
+          ]
+        }
+      },
+      {
+        "metadata": {
+          "name": "cache",
+          "namespace": "demo"
+        },
+        "status": {
+          "phase": "Running",
+          "conditions": [
+            {
+              "type": "Ready",
+              "status": "True"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "name": "app",
+              "ready": true,
+              "restartCount": 0
+            }
+          ]
+        }
+      },
+      {
+        "metadata": {
+          "name": "frontend",
+          "namespace": "demo"
+        },
+        "status": {
+          "phase": "Running",
+          "conditions": [
+            {
+              "type": "Ready",
+              "status": "True"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "name": "app",
+              "ready": true,
+              "restartCount": 1
+            }
+          ]
+        }
+      },
+      {
+        "metadata": {
+          "name": "gateway",
+          "namespace": "demo"
+        },
+        "status": {
+          "phase": "Pending",
+          "conditions": [
+            {
+              "type": "Ready",
+              "status": "False"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "name": "app",
+              "ready": false,
+              "restartCount": 0,
+              "state": {
+                "waiting": {
+                  "reason": "ErrImagePull"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "metadata": {
+          "name": "metrics-agent",
+          "namespace": "demo"
+        },
+        "status": {
+          "phase": "Unknown",
+          "conditions": [
+            {
+              "type": "Ready",
+              "status": "Unknown"
+            }
+          ]
+        }
+      },
+      {
+        "metadata": {
+          "name": "migration",
+          "namespace": "demo"
+        },
+        "status": {
+          "phase": "Pending",
+          "conditions": [
+            {
+              "type": "Ready",
+              "status": "False"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "name": "app",
+              "ready": false,
+              "restartCount": 0,
+              "state": {
+                "waiting": {
+                  "reason": "ImagePullBackOff"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "metadata": {
+          "name": "scheduler",
+          "namespace": "demo"
+        },
+        "status": {
+          "phase": "Running",
+          "conditions": [
+            {
+              "type": "Ready",
+              "status": "True"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "name": "app",
+              "ready": true,
+              "restartCount": 0
+            }
+          ]
+        }
+      },
+      {
+        "metadata": {
+          "name": "search",
+          "namespace": "demo",
+          "deletionTimestamp": "2026-11-10T11:58:00Z"
+        },
+        "status": {
+          "phase": "Running",
+          "conditions": [
+            {
+              "type": "Ready",
+              "status": "False"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "name": "app",
+              "ready": false,
+              "restartCount": 2
             }
           ]
         }
@@ -149,9 +307,42 @@
         },
         "type": "Warning",
         "reason": "Unhealthy",
-        "message": "Probe failed",
+        "message": "API container failed repeatedly after starting.",
         "lastTimestamp": "2026-11-10T11:30:00Z",
         "count": 40
+      },
+      {
+        "metadata": {
+          "name": "metrics-agent-node-unreachable",
+          "namespace": "demo"
+        },
+        "type": "Warning",
+        "reason": "NodeNotReady",
+        "message": "The node hosting metrics-agent stopped reporting status.",
+        "lastTimestamp": "2026-11-10T11:42:00Z",
+        "count": 1
+      },
+      {
+        "metadata": {
+          "name": "gateway-registry-denied",
+          "namespace": "demo"
+        },
+        "type": "Warning",
+        "reason": "Failed",
+        "message": "Gateway image pull was denied by the registry.",
+        "lastTimestamp": "2026-11-10T11:48:00Z",
+        "count": 1
+      },
+      {
+        "metadata": {
+          "name": "migration-image-backoff",
+          "namespace": "demo"
+        },
+        "type": "Warning",
+        "reason": "BackOff",
+        "message": "Backing off the migration image pull.",
+        "lastTimestamp": "2026-11-10T11:54:00Z",
+        "count": 1
       }
     ]
   }

@@ -84,6 +84,159 @@
       },
       {
         "metadata": {
+          "name": "cache",
+          "namespace": "demo"
+        },
+        "status": {
+          "phase": "Running",
+          "conditions": [
+            {
+              "type": "Ready",
+              "status": "True"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "name": "app",
+              "ready": true,
+              "restartCount": 0
+            }
+          ]
+        }
+      },
+      {
+        "metadata": {
+          "name": "frontend",
+          "namespace": "demo"
+        },
+        "status": {
+          "phase": "Running",
+          "conditions": [
+            {
+              "type": "Ready",
+              "status": "True"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "name": "app",
+              "ready": true,
+              "restartCount": 1
+            }
+          ]
+        }
+      },
+      {
+        "metadata": {
+          "name": "gateway",
+          "namespace": "demo"
+        },
+        "status": {
+          "phase": "Running",
+          "conditions": [
+            {
+              "type": "Ready",
+              "status": "True"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "name": "app",
+              "ready": true,
+              "restartCount": 0
+            }
+          ]
+        }
+      },
+      {
+        "metadata": {
+          "name": "metrics-agent",
+          "namespace": "demo"
+        },
+        "status": {
+          "phase": "Unknown",
+          "conditions": [
+            {
+              "type": "Ready",
+              "status": "Unknown"
+            }
+          ]
+        }
+      },
+      {
+        "metadata": {
+          "name": "migration",
+          "namespace": "demo"
+        },
+        "status": {
+          "phase": "Pending",
+          "conditions": [
+            {
+              "type": "Ready",
+              "status": "False"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "name": "app",
+              "ready": false,
+              "restartCount": 0,
+              "state": {
+                "waiting": {
+                  "reason": "ContainerCreating"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "metadata": {
+          "name": "scheduler",
+          "namespace": "demo"
+        },
+        "status": {
+          "phase": "Running",
+          "conditions": [
+            {
+              "type": "Ready",
+              "status": "True"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "name": "app",
+              "ready": true,
+              "restartCount": 0
+            }
+          ]
+        }
+      },
+      {
+        "metadata": {
+          "name": "search",
+          "namespace": "demo",
+          "deletionTimestamp": "2026-11-10T11:58:00Z"
+        },
+        "status": {
+          "phase": "Running",
+          "conditions": [
+            {
+              "type": "Ready",
+              "status": "False"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "name": "app",
+              "ready": false,
+              "restartCount": 2
+            }
+          ]
+        }
+      },
+      {
+        "metadata": {
           "name": "other-broken",
           "namespace": "other"
         },
@@ -150,9 +303,20 @@
         },
         "type": "Warning",
         "reason": "Unhealthy",
-        "message": "Probe failed",
+        "message": "Worker readiness probe failed.",
         "lastTimestamp": "2026-11-10T11:30:00Z",
         "count": 40
+      },
+      {
+        "metadata": {
+          "name": "metrics-agent-node-unreachable",
+          "namespace": "demo"
+        },
+        "type": "Warning",
+        "reason": "NodeNotReady",
+        "message": "The node hosting metrics-agent stopped reporting status.",
+        "lastTimestamp": "2026-11-10T11:42:00Z",
+        "count": 1
       }
     ]
   }

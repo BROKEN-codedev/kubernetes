@@ -32,6 +32,23 @@ class CliTests(unittest.TestCase):
                 self.assertEqual(err, "")
                 self.assertEqual(json.loads(out)["status"], status)
 
+    def test_populated_demo_scenarios_include_varied_pods(self):
+        for scenario in ("healthy", "degraded", "critical"):
+            with self.subTest(scenario=scenario):
+                _, out, _ = self.invoke("--scenario", scenario, "--json")
+                report = json.loads(out)
+                pods = report["pods"]
+                self.assertGreaterEqual(len(pods), 10)
+                self.assertTrue(all(pod["namespace"] == "demo" for pod in pods))
+                self.assertTrue(any(pod["ready"] for pod in pods))
+                if scenario != "healthy":
+                    self.assertTrue(any(pod["terminating"] for pod in pods))
+                    self.assertTrue({"Pending", "Unknown", "Succeeded"} <= {pod["phase"] for pod in pods})
+                if scenario == "critical":
+                    self.assertIn("Failed", {pod["phase"] for pod in pods})
+                    reasons = {reason for pod in pods for reason in pod["waiting_reasons"]}
+                    self.assertTrue({"CrashLoopBackOff", "ImagePullBackOff", "ErrImagePull"} <= reasons)
+
     def test_default_text_report_includes_required_context(self):
         code, out, err = self.invoke()
         self.assertEqual(code, 0)

@@ -30,3 +30,9 @@ source = ["ns_health"]
 [tool.coverage.report]
 fail_under = 85
 show_missing = true
+
+[dependency-groups]
+web = ["fastapi>=0.115,<1", "uvicorn>=0.34,<1"]
+
+[tool.uv]
+default-groups = ["web"]

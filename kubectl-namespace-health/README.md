@@ -157,10 +157,11 @@ From `kubectl-namespace-health/`, install the separate web dependencies into a v
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install -r requirements.txt
+python -m pip install --upgrade pip
+python -m pip install --group web
 python -m uvicorn app:app --host 127.0.0.1 --port 8765
 ```
 
 Open `http://127.0.0.1:8765/` to analyze a snapshot, or `/guide` for the fixture format and health rules. The workspace calls the Python analyzer, displays the applied options, and can export the result or copy a matching CLI command. The web request limit is 4 MiB including snapshot JSON and settings. CLI installation and simulation continue to use the standalone Python wheel.
 
-To run the HTTP adapter tests, install `httpx>=0.28,<1` in the web environment and run `python -m unittest discover -s web_tests -v`. To deploy on Vercel, use the FastAPI framework and set the project root to `kubectl-namespace-health`. The entry point is `app.py` and the web dependencies are declared in `requirements.txt`.
+To run the HTTP adapter tests, install `httpx>=0.28,<1` in the web environment and run `python -m unittest discover -s web_tests -v`. To deploy on Vercel, use the FastAPI framework and set the project root to `kubectl-namespace-health`. The entry point is `app.py` and the web dependencies are declared in the `web` dependency group in `pyproject.toml`. Vercel installs that group through uv.

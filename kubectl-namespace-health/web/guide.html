@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Guide · Namespace Health</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="/">Namespace Health</a>
+      <nav aria-label="Main navigation">
+        <a href="/">Workspace</a><a href="/guide" aria-current="page">Guide</a>
+      </nav>
+      <a class="repo-link" href="https://github.com/BROKEN-codedev/kubernetes/tree/ojt/namespace-health/kubectl-namespace-health">GitHub <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+  <main id="main" class="workspace guide" tabindex="-1">
+    <h1>Analysis guide</h1>
+    <p>Analyze a simulated Kubernetes snapshot using the same Python health rules as <code>kubectl ns-health</code>.</p>
+    <section class="panel" aria-labelledby="guide-status">
+      <h2 class="panel-heading" id="guide-status">Health status and CLI exit codes</h2>
+      <table>
+        <thead><tr><th scope="col">Status</th><th scope="col">Exit</th><th scope="col">Meaning</th></tr></thead>
+        <tbody>
+          <tr><th scope="row" class="healthy">Healthy</th><td>0</td><td>All evaluated pods are ready and no health indicators were triggered.</td></tr>
+          <tr><th scope="row" class="degraded">Degraded</th><td>1</td><td>An unready pod, a restart threshold breach, or a recent warning.</td></tr>
+          <tr><th scope="row" class="critical">Critical</th><td>2</td><td>A failed pod, a critical waiting reason, or no ready pods among workloads being evaluated.</td></tr>
+          <tr><th scope="row" class="unknown">Unknown</th><td>3</td><td>No evaluated workloads, indeterminate warning recency, or invalid input. The workspace displays invalid inputs as errors.</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section class="panel" aria-labelledby="guide-rules">
+      <h2 class="panel-heading" id="guide-rules">How to read a result</h2>
+      <div class="guide-copy">
+        <p>Readiness requires a Running pod, a true Kubernetes Ready condition, and no deletion timestamp. Succeeded pods are counted as completed and excluded from evaluated workloads.</p>
+        <p>The restart threshold applies to each evaluated pod’s cumulative ordinary and init-container restarts. The warning window counts event records up to the snapshot’s reference time.</p>
+        <p>Event timestamps are tried in this order: <code>series.lastObservedTime</code>, <code>lastTimestamp</code>, <code>eventTime</code>, <code>metadata.creationTimestamp</code>. The window includes both endpoints and excludes future events.</p>
+      </div>
+    </section>
+    <section class="panel" aria-labelledby="guide-custom">
+      <h2 class="panel-heading" id="guide-custom">Analyze a custom snapshot</h2>
+      <div class="guide-copy">
+        <p>Choose <strong>Custom JSON</strong>, select the file, enter a declared namespace, then choose <strong>Analyze</strong>. The request includes the snapshot JSON and analysis settings. Its size limit is 4 MiB.</p>
+        <p>Supply <code>metadata.namespaces</code>, a timezone-aware <code>metadata.referenceTime</code>, and core/v1 <code>PodList</code> and <code>EventList</code> objects under <code>pods</code> and <code>events</code>.</p>
+        <pre><code>kubectl ns-health --fixture ./snapshot.json --namespace demo --json</code></pre>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

@@ -149,3 +149,18 @@ Official references:
 - [Readiness and liveness probes](https://kubernetes.io/docs/concepts/workloads/pods/probes/)
 
 License: MIT. To clean a local setup, delete only this project's `.venv`, generated coverage files and `dist` if rebuilding; do not remove source or your evidence.
+
+## Browser workspace
+
+From `kubectl-namespace-health/`, install the separate web dependencies into a virtual environment and start the same-origin FastAPI adapter.
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python -m uvicorn app:app --host 127.0.0.1 --port 8765
+```
+
+Open `http://127.0.0.1:8765/` to analyze a snapshot, or `/guide` for the fixture format and health rules. The workspace calls the Python analyzer, displays the applied options, and can export the result or copy a matching CLI command. The web request limit is 4 MiB including snapshot JSON and settings. CLI installation and simulation continue to use the standalone Python wheel.
+
+To run the HTTP adapter tests, install `httpx>=0.28,<1` in the web environment and run `python -m unittest discover -s web_tests -v`. To deploy on Vercel, use the FastAPI framework and set the project root to `kubectl-namespace-health`. The entry point is `app.py` and the web dependencies are declared in `requirements.txt`.

@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Namespace Health</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+  <script type="module" src="/assets/workspace.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="/">Namespace Health</a>
+      <nav aria-label="Main navigation">
+        <a href="/" aria-current="page">Workspace</a>
+        <a href="/guide">Guide</a>
+      </nav>
+      <a class="repo-link" href="https://github.com/BROKEN-codedev/kubernetes/tree/ojt/namespace-health/kubectl-namespace-health">GitHub <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+  <main id="main" class="workspace" tabindex="-1">
+    <section class="page-top" aria-labelledby="title">
+      <div>
+        <p class="mode">Kubernetes <span aria-hidden="true">/</span> Simulation</p>
+        <h1 id="title">Namespace overview</h1>
+      </div>
+      <p id="api-state" class="api-state" role="status"></p>
+    </section>
+
+    <noscript><p class="notice error">The analysis workspace requires JavaScript.</p></noscript>
+    <div class="layout">
+      <aside aria-labelledby="inputs-heading">
+        <section class="panel">
+          <h2 class="panel-heading" id="inputs-heading">Analysis inputs</h2>
+          <form id="analysis-form" class="input-form">
+            <div class="field source-field">
+              <label for="source">Snapshot</label>
+              <select id="source" name="scenario">
+                <option value="healthy">Healthy</option>
+                <option value="degraded" selected>Degraded</option>
+                <option value="critical">Critical</option>
+                <option value="empty">Empty</option>
+                <option value="custom">Custom JSON</option>
+              </select>
+            </div>
+            <div class="field" id="file-field" hidden>
+              <label for="fixture">Snapshot file</label>
+              <input type="file" id="fixture" accept=".json,application/json" aria-describedby="file-help">
+              <p class="hint" id="file-help">Request limit 4 MiB, including options.</p>
+            </div>
+            <div class="field namespace-field">
+              <label for="namespace">Namespace</label>
+              <input id="namespace" name="namespace" list="namespaces" value="demo" autocomplete="off" required>
+              <datalist id="namespaces"></datalist>
+            </div>
+            <details class="advanced">
+              <summary>Analysis settings</summary>
+              <div class="settings">
+                <label for="restart-threshold">Restart threshold per pod</label>
+                <input id="restart-threshold" type="number" value="5" min="0" step="1" required>
+                <label for="recent-minutes">Warning window (minutes)</label>
+                <input id="recent-minutes" type="number" value="60" min="1" step="1" required>
+                <label for="reference-time">Reference time override</label>
+                <input id="reference-time" placeholder="2026-11-10T12:00:00Z" aria-describedby="time-help">
+                <p id="time-help" class="hint">Use ISO 8601 with a timezone.</p>
+              </div>
+            </details>
+            <div class="actions">
+              <button class="primary" type="submit">Analyze</button>
+              <button id="reset-analysis" type="button">Reset</button>
+            </div>
+            <p class="hint" id="pending" role="status" hidden>Inputs changed. Analyze to apply.</p>
+          </form>
+        </section>
+
+      </aside>
+
+      <div class="results">
+        <p id="loading" class="notice" role="status" hidden></p>
+        <p id="error" class="notice error" role="alert" hidden></p>
+        <div id="report" hidden>
+          <section class="panel report-summary" aria-labelledby="namespace-title">
+            <div class="snapshot-header">
+              <div>
+                <p class="eyebrow">Namespace <span aria-hidden="true">/</span> <span id="snapshot-label"></span></p>
+                <div class="namespace-line">
+                  <h2 id="namespace-title"></h2>
+                  <span id="health-status" class="health-status"></span>
+                </div>
+                <p class="reference">Reference time <time id="report-time"></time></p>
+                <p class="reference" id="applied-settings"></p>
+              </div>
+              <button id="export-report" type="button">Export JSON</button>
+            </div>
+            <dl class="metrics">
+              <div><dt>Pods ready</dt><dd id="ready-value"></dd></div>
+              <div><dt>Completed</dt><dd id="completed-value"></dd></div>
+              <div><dt>Cumulative restarts</dt><dd id="restart-value"></dd></div>
+              <div><dt>Recent warnings</dt><dd id="warning-value"></dd></div>
+            </dl>
+          </section>
+
+          <section class="panel data-section" aria-labelledby="pods-heading">
+            <div class="panel-heading heading-row">
+              <h2 id="pods-heading">Pods <span id="pod-count" class="count"></span></h2>
+              <div class="table-controls">
+                <label class="sr-only" for="pod-search">Filter pods</label>
+                <input type="search" id="pod-search" placeholder="Filter pods">
+                <label class="sr-only" for="pod-filter">Pod readiness</label>
+                <select id="pod-filter">
+                  <option value="all">All pods</option><option value="unready">Not ready</option>
+                  <option value="ready">Ready</option><option value="completed">Completed</option>
+                </select>
+              </div>
+            </div>
+            <div id="pod-table-wrap" class="table-scroll" role="region" aria-label="Pod results" tabindex="0">
+              <table>
+                <thead><tr>
+                  <th scope="col" id="name-heading" aria-sort="ascending"><button id="sort-name" type="button">Pod <span aria-hidden="true">↑</span></button></th>
+                  <th scope="col">Phase</th>
+                  <th scope="col">Readiness</th>
+                  <th scope="col" id="restart-heading" class="number"><button id="sort-restarts" type="button">Restarts <span aria-hidden="true"></span></button></th>
+                </tr></thead>
+                <tbody id="pod-rows"></tbody>
+              </table>
+            </div>
+            <p class="empty" id="pod-empty" role="status" hidden></p>
+          </section>
+
+          <section class="panel data-section" aria-labelledby="events-heading">
+            <div class="panel-heading heading-row">
+              <h2 id="events-heading">Warning events <span id="event-count" class="count"></span></h2>
+              <label class="sr-only" for="event-search">Filter warning events</label>
+              <input type="search" id="event-search" placeholder="Filter events">
+            </div>
+            <div id="event-table-wrap" class="table-scroll" role="region" aria-label="Warning event results" tabindex="0">
+              <table class="events-table">
+                <thead><tr><th scope="col">Event / reason</th><th scope="col">Message</th><th scope="col">Observed (UTC)</th></tr></thead>
+                <tbody id="event-rows"></tbody>
+              </table>
+            </div>
+            <p class="empty" id="event-empty" role="status" hidden></p>
+            <p class="timestamp-note" id="timestamp-note" hidden></p>
+          </section>
+
+          <section class="panel" aria-labelledby="findings-heading">
+            <h2 class="panel-heading" id="findings-heading">Health findings</h2>
+            <ul id="findings"></ul>
+          </section>
+        </div>
+      </div>
+      <section class="panel reproduce" id="reproduce" aria-labelledby="reproduce-heading" hidden>
+        <div class="panel-heading heading-row">
+          <h2 id="reproduce-heading">Reproduce in CLI</h2>
+          <button id="copy-command" type="button" class="quiet">Copy</button>
+        </div>
+        <p class="hint" id="command-help" hidden>Replace <code>./snapshot.json</code> with your local file path.</p>
+        <pre><code id="command"></code></pre>
+        <p class="hint" id="copy-feedback" role="status"></p>
+      </section>
+    </div>
+    <dialog id="pod-dialog" aria-labelledby="pod-dialog-title">
+      <div class="panel-heading heading-row">
+        <h2 id="pod-dialog-title"></h2>
+        <form method="dialog"><button type="submit" autofocus>Close</button></form>
+      </div>
+      <dl id="pod-detail"></dl>
+    </dialog>
+  </main>
+</body>
+</html>
